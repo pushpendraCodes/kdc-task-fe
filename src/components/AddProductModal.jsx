@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import {
   addCombinedProductAsync,
+  productStatus,
   selectGrades,
   selectMaterial,
   selectProducts,
@@ -17,6 +18,7 @@ export default function AddProductModal({ onClose }) {
   const products = useSelector(selectProducts);
   const materials = useSelector(selectMaterial);
   const grades = useSelector(selectGrades);
+  const status = useSelector(productStatus);
   console.log(products, materials, grades, "print");
 
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -65,6 +67,7 @@ export default function AddProductModal({ onClose }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-[700px] h-[80vh] bg-white p-6 rounded-xl shadow-lg">
+      {status == "loading" &&  <span>loading....</span>}
         <h2 className="text-xl font-semibold mb-4">Add Products</h2>
         <div className="flex my-2 justify-between">
           <h2  className="text-lg font-bold">Product</h2>
@@ -73,6 +76,8 @@ export default function AddProductModal({ onClose }) {
         </div>
         <div className="grid grid-cols-3 gap-4">
           {/* Products Column */}
+
+
           <div className="border rounded-lg h-96  overflow-y-auto">
             {products?.map((product) => (
               <div

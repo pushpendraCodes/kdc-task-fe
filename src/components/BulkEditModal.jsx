@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { EditDetailsProductAsync, quickEditProductAsync } from "../features/product/ProductSlice";
+import { EditDetailsProductAsync, productStatus, quickEditProductAsync } from "../features/product/ProductSlice";
+import { useSelector } from "react-redux";
 
 export const BulkEditModal = ({ isOpen, selectedProducts,setSelectedProducts,onClose, editType }) => {
     const [formData, setFormData] = useState({
@@ -33,10 +34,11 @@ export const BulkEditModal = ({ isOpen, selectedProducts,setSelectedProducts,onC
         alert("Error updating products");
       }
     };
-
+    const status = useSelector(productStatus);
     return (
       isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+         {status == "loading" &&  <span>loading....</span>}
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-lg font-bold">{editType === "quick" ? "Quick Edit" : "Details Update"}</h2>
             <div className="mt-4">

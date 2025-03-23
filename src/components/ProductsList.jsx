@@ -9,6 +9,7 @@ import {
   EditDetailsProductAsync,
   SearchFilterProductAsync,
   selectMaterial,
+  productStatus,
 } from "../features/product/ProductSlice";
 import { useEffect } from "react";
 import Product from "./Product";
@@ -19,7 +20,7 @@ import { BulkEditModal } from "./BulkEditModal";
 
 const ProductsList = () => {
   const dispatch = useDispatch();
-
+  const status = useSelector(productStatus);
   const CombinedProductsList = useSelector(selectCombinedProducts);
   const ProductsList = useSelector(selectProducts);
   const materialList = useSelector(selectMaterial);
@@ -91,7 +92,7 @@ const ProductsList = () => {
             className="bg-blue-600 cursor-pointer text-white px-8 py-2 rounded-4xl">
             + Add Products
           </button>
-          <span className="text-lg font-semibold">280/400 Products</span>
+          {/* <span className="text-lg font-semibold">280/400 Products</span> */}
         </div>
         <div className="flex  mt-4 w-1/2">
           <input
@@ -256,6 +257,8 @@ const ProductsList = () => {
               ) : (
                 <span>no data found</span>
               )}
+
+              {status == "loading" &&  <span>loading....</span>}
             </tbody>
           </table>
         </div>
